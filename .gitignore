@@ -60,6 +60,8 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+*.tmp
+*.temp
 
 # Flask stuff:
 instance/
@@ -133,6 +135,7 @@ celerybeat.pid
 env/
 venv/
 ENV/
+tunesense_env/
 env.bak/
 venv.bak/
 
@@ -193,3 +196,7 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 data/*
+
+# OS files
+.DS_Store
+Thumbs.db
