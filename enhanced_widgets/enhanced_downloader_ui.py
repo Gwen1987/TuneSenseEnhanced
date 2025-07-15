@@ -17,6 +17,8 @@ from ab_testing_framework import ABTestManager, TuneSenseABTester
 import uuid
 import os
 import json
+from pymongo import MongoClient
+
 os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
 
 
@@ -29,7 +31,7 @@ class EnhancedYouTubeDownloader(QWidget):
         self.setGeometry(300, 300, 900, 700)
         
         # Initialize AB testing
-        self.user_id = f"user_{uuid.uuid4().hex[:8]}"
+        self.user_id = f"user_(uuid.uuid4())"
         mongo_uri = "mongodb+srv://supertrooper:UofT1234@musiccluster.ix1va8y.mongodb.net/?retryWrites=true&w=majority&appName=musiccluster"
         self.ab_manager = ABTestManager(mongo_uri)
         self.ab_tester = TuneSenseABTester(self.ab_manager)
