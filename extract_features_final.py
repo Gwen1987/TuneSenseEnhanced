@@ -11,8 +11,11 @@ AUDIO_DIR = Path("data") / "fma_large" / "fma_large_root" / "fma_large"
 FEATURES_FILE = Path("outputs/merged_features.csv")
 FLATTENED_FILE = Path("outputs/flattened_features.csv")
 LIMIT = 5000
+filepath = Path("song_downloads")
 
 def extract_features(filepath):
+    filepath = Path(filepath)  # ✅ Convert to Path object if passed as a string
+
     try:
         print(f"🔍 Processing: {filepath.name}")
         y, sr = librosa.load(str(filepath), sr=22050, mono=True, duration=30)
@@ -27,7 +30,7 @@ def extract_features(filepath):
             "tempo": [tempo]
         }
     except Exception as e:
-        print(f"❌ Error with {filepath.name}: {e}")
+        print(f"(extract_features_final.extract_features)❌ Error with {filepath}: {e}")
         return None
 
 def process_audio_files(limit=LIMIT):

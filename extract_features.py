@@ -135,7 +135,7 @@ def extract_features(filepath):
             "tempo": [tempo]  # wrap in list for consistency
         }
     except Exception as e:
-        print(f"❌ Error with {filepath.name}: {e}")
+        print(f"❌ Error with {filepath}: {e}")
         return None
 
 def process_audio_files(limit=LIMIT):
