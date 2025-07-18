@@ -14,24 +14,49 @@ LIMIT = 5000
 filepath = Path("song_downloads")
 
 def extract_features(filepath):
-    filepath = Path(filepath)  # ✅ Convert to Path object if passed as a string
+    from pathlib import Path
+    import librosa
+
+    filepath = Path(filepath)  # ✅ Ensure Path object
 
     try:
-        print(f"🔍 Processing: {filepath.name}")
+        print(f"🔍 [extract_features] Starting processing: {filepath.name}")
+
+        # ✅ Step 1: Confirm file exists
+        if not filepath.exists():
+            print(f"❌ File does not exist: {filepath}")
+            return None
+        else:
+            print(f"📁 File exists: {filepath}")
+
+        # ✅ Step 2: Try loading with librosa
+        print("📥 Loading audio with librosa...")
         y, sr = librosa.load(str(filepath), sr=22050, mono=True, duration=30)
+        print(f"✅ Loaded audio: {len(y)} samples at {sr} Hz")
+
+        # ✅ Step 3: Feature extraction
+        print("🎧 Extracting MFCC...")
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+        print("🎧 Extracting Chroma...")
         chroma = librosa.feature.chroma_stft(y=y, sr=sr)
+        print("🎧 Extracting Spectral Contrast...")
         spec_contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
+        print("🎧 Extracting Tempo...")
         tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
+
+        print("✅ All features extracted successfully.")
+
         return {
             "mfcc": mfcc.mean(axis=1).tolist(),
             "chroma": chroma.mean(axis=1).tolist(),
             "spec_contrast": spec_contrast.mean(axis=1).tolist(),
             "tempo": [tempo]
         }
+
     except Exception as e:
-        print(f"(extract_features_final.extract_features)❌ Error with {filepath}: {e}")
+        print(f"(extract_features)❌ Error with {filepath}: {e}")
         return None
+
 
 def process_audio_files(limit=LIMIT):
     all_features = []

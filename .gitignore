@@ -200,3 +200,10 @@ data/*
 # OS files
 .DS_Store
 Thumbs.db
+widgets/
+ab_testing_framework.py
+add_new_audio_features.py
+clean_tracks_metadata.py
+project_tree.txt
+song_downloads/
+scripts/
